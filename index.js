@@ -25,11 +25,12 @@ app.get("/api/hello", function (req, res) {
 });
 
 //whoami endpoint
-app.use("/api/whoami", (req, res, next) => {
-  let ip = req.ip;
-  let lang = req["accept-language"];
-  console.dir(lang);
-  const iam = { ipadress: ip };
+app.use("/api/whoami", (req, res) => {
+  let ip = req.headers["x-forwarded-for"];
+  let sys = req.headers["user-agent"];
+  let lang = req.headers["accept-language"];
+  // console.log(lang);
+  const iam = { ipaddress: ip, language: lang, software: sys };
   res.json(iam);
 });
 
